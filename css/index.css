@@ -1,0 +1,80 @@
+.board-box {
+	border-radius: 2px;
+	margin-top: 20px;
+	padding: 100px 0px;
+	background-color: #0079BF;
+}
+
+.board-box span {
+	background-color: #0079BF;
+	font-size: 30px;
+	color: white;
+	font-weight: 800;
+}
+
+.board-box p {
+	color: white;
+	font-weight: 300;
+}
+
+.board-box input{
+	background-color: #0079BF;
+	font-size: 30px;
+	color: white;
+	font-weight: 800;
+	border: 0px;
+    width: 100%;
+    text-align: center;
+    outline-color: transparent !important;
+}
+
+.board-box input:hover{
+    outline-color: transparent !important;
+    outline-offset: 0px;
+	outline-style: auto;
+	outline-width: 0px;
+}
+
+.board-box input:active{
+    outline-color: transparent !important;
+    outline-offset: 0px;
+	outline-style: auto;
+	outline-width: 0px;
+}
+
+.board-box input:focus{
+    outline-color: transparent !important;
+    outline-offset: 0px;
+	outline-style: auto;
+	outline-width: 0px;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    white;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    white;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    white;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    white;
+}
+
+::-webkit-input-placeholder :focus{ /* WebKit, Blink, Edge */
+    color:    #0079BF;
+}
+:-moz-placeholder :focus{ /* Mozilla Firefox 4 to 18 */
+   color:    #0079BF;
+   opacity:  1;
+}
+::-moz-placeholder :focus{ /* Mozilla Firefox 19+ */
+   color:    #0079BF;
+   opacity:  1;
+}
+:-ms-input-placeholder :focus{ /* Internet Explorer 10-11 */
+   color:    #0079BF;
+}
