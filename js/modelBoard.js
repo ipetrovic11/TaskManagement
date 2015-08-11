@@ -37,6 +37,21 @@ Board = can.Model.extend({
 			});
 		}
 		this.destroy();
+	},
+
+	listsNumber: function(){
+		return this.lists? this.lists.length : 0;
+	},
+	tasksNumber:function(){
+		var total = 0;
+		if(this.lists){
+			for(var i = 0; i<this.lists.length; i++){
+				if(this.lists[i].tasks){
+					total += this.lists[i].tasks.length;
+				}
+			}
+		}
+		return total;
 	}
 
 });
@@ -102,3 +117,7 @@ can.fixture('DELETE /boards/{id}', function (params){
 
 	return apiLog(result, params);
 });
+
+
+
+
