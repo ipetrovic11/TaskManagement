@@ -2,19 +2,7 @@ List = can.Model.extend({
 
 	//Neasted(assosiated models and serialisation)
 	attributes: {
-		lists: 'Task.models'
-	},
-	convert: {
-		'Task.models': function (val){
-
-			var serialization = [];
-
-			for(var i =0; i< val.length; i++){
-				serialization.push(val[i].id);
-			}
-
-			return serialization;
-		}
+		tasks: 'Task.models'
 	},
 
 	//API
@@ -31,7 +19,6 @@ List = can.Model.extend({
 	parseModel: function(data, xhr){
 		return data;
 	}
-
 },{
 	customSave: function(){
 		this.save().then(function(list){
@@ -41,6 +28,15 @@ List = can.Model.extend({
 				});
 			}
 		});
+	},
+	//WITH REAL API(AJAX) WILL HAVE TO CHECK IF THIS WILL WORK BECAUSE OF ASYNC
+	customDestroy: function(){
+		if(this.tasks){
+			this.tasks.each(function(task){
+				task.destroy();
+			});
+		}
+		this.destroy();
 	}
 
 });
@@ -94,6 +90,13 @@ can.fixture('DELETE /lists/{id}', function (params){
 
 	for(var i in list.tasks){
 		delete db.tasks[list.tasks[i].id];
+	}
+
+	//Removeing reference form parent
+	for(var i in db.boards[list.parentId].lists){
+		if(db.boards[list.parentId].lists[i].id == list.id){
+			db.boards[list.parentId].lists.splice(i, 1);
+		}
 	}
 
 	delete db.lists[params.data.id];

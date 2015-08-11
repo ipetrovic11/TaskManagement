@@ -1,4 +1,4 @@
-List = can.Model.extend({
+Task = can.Model.extend({
 
 	//API
 	findAll: 	'GET /tasks',
@@ -23,7 +23,7 @@ can.fixture('GET /tasks', function (params){
 
 	var tasks = Object.keys(db.tasks).map(function (key) {return db.tasks[key]});
 
-	return apiLog(tasks, tasks);
+	return apiLog(tasks, params);
 });
 
 can.fixture('GET /tasks/{id}', function (params){
@@ -56,6 +56,16 @@ can.fixture('PUT /tasks/{id}', function (params){
 });
 
 can.fixture('DELETE /tasks/{id}', function (params){
+
+	var task = db.tasks[params.data.id];
+
+
+	//Removeing reference form parent
+	for(var i in db.lists[task.parentId].tasks){
+		if(db.lists[task.parentId].tasks[i].id == task.id){
+			delete db.lists[task.parentId].tasks.splice(i, 1);
+		}
+	}
 
 	delete db.tasks[params.data.id];
 

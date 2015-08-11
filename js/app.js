@@ -1,11 +1,18 @@
 //DB DECLARATION
 window.db 	= {};
 
+db.tasksSerial = 3;
+db.tasks 	= {
+	1: {id: 1, parentId: 2,name: 'Creating objects'},
+	2: {id: 2, parentId: 1,name: 'Creating view'},
+	3: {id: 3, parentId: 1,name: 'Creating routes'}
+};
+
 db.listsSerial = 3;
 db.lists 	= {
-	1: {id: 1, name: 'ToDo'},
-	2: {id: 2, name: 'Doing'},
-	3: {id: 3, name: 'Done'}
+	1: {id: 1, parentId: 3,name: 'ToDo', tasks: [db.tasks[2], db.tasks[3]]},
+	2: {id: 2, parentId: 3,name: 'Doing', tasks: [db.tasks[1]]},
+	3: {id: 3, parentId: 3,name: 'Done'}
 };
 
 db.boardsSerial = 3;
@@ -14,9 +21,6 @@ db.boards 	= {
 	2: {id: 2, name: 'Marketing'},
 	3: {id: 3, name: 'Sales', lists: [db.lists[1], db.lists[2], db.lists[3]] }
 };
-
-db.tasksSerial = 3;
-db.task 	= {};
 
 
 

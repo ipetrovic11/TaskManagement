@@ -5,21 +5,6 @@ Board = can.Model.extend({
 		lists: 'List.models'
 	},
 
-	serialize: {
-		'List.models': function (val){
-
-			console.log('TEST');
-
-			var serialization = [];
-
-			for(var i =0; i< val.length; i++){
-				serialization.push(val[i].id);
-			}
-
-			return serialization;
-		}
-	},
-
 	//API
 	findAll: 	'GET /boards',
 	findOne:  	'GET /boards/{id}',
@@ -29,17 +14,11 @@ Board = can.Model.extend({
 
 	//PARSE
 	parseModels: function(data, xhr){
-		console.log(data);
 		return data;
 	},
 	parseModel: function(data, xhr){
 		return data;
-	},
-
-	customSave: function(){
-		console.log('test');
 	}
-
 },{
 	customSave: function(){
 		this.save().then(function(board){
@@ -49,6 +28,15 @@ Board = can.Model.extend({
 				})
 			}
 		});
+	},
+	//WITH REAL API(AJAX) WILL HAVE TO CHECK IF THIS WILL WORK BECAUSE OF ASYNC
+	customDestroy: function(){
+		if(this.lists){
+			this.lists.each(function(list){
+				list.customDestroy();
+			});
+		}
+		this.destroy();
 	}
 
 });

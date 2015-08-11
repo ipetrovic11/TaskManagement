@@ -27,6 +27,12 @@
 				<% if(board.lists) {board.lists.each(function(list){ %>
 					<div>
 						<h2><%= list.attr('name') %></h2>
+						<% if(list.tasks) {list.tasks.each(function(task){ %>
+							<div>
+								<h3><%= task.attr('name') %></h3>
+							</div>
+						<% }) }%>
+
 					</div>
 				<% }) }%>
 
