@@ -41,7 +41,6 @@ List = can.Model.extend({
 
 });
 
-
 //API REQUESTS
 can.fixture('GET /lists', function (params){
 
@@ -60,7 +59,14 @@ can.fixture('GET /lists/{id}', function (params){
 can.fixture('POST /lists', function (params){
 
 	db.listsSerial++;
-	db.lists[db.listsSerial] = {id: db.listsSerial, name: params.data.name}
+	db.lists[db.listsSerial] = {id: db.listsSerial, name: params.data.name, parentId: params.data.parentId};
+
+
+	if(!db.boards[params.data.parentId].lists){
+		db.boards[params.data.parentId].lists = [];
+	}
+
+	db.boards[params.data.parentId].lists.push(db.lists[db.listsSerial]);
 
 	var result = {id: db.listsSerial};
 

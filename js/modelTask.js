@@ -36,7 +36,19 @@ can.fixture('GET /tasks/{id}', function (params){
 can.fixture('POST /tasks', function (params){
 
 	db.tasksSerial++;
-	db.tasks[db.tasksSerial] = {id: db.tasksSerial, name: params.data.name}
+	db.tasks[db.tasksSerial] = {
+		id: db.tasksSerial, 
+		name: params.data.name, 
+		parentId: params.data.parentId,
+		started: params.data.started,
+		total: params.data.total
+	}
+
+	if(!db.lists[params.data.parentId].tasks){
+		db.lists[params.data.parentId].tasks = [];
+	}
+
+	db.lists[params.data.parentId].tasks.push(db.tasks[db.tasksSerial]);
 
 	var result = {id: db.tasksSerial};
 
@@ -47,8 +59,10 @@ can.fixture('PUT /tasks/{id}', function (params){
 
 	var task = db.tasks[params.data.id];
 
-	task.name = params.data.name;
-
+	task.name 		= params.data.name;
+	task.parentId 	= params.data.parentId;
+	task.started 	= params.data.started;
+	task.total 		= params.data.total;
 
 	var result = {};
 
