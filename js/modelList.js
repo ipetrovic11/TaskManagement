@@ -1,18 +1,18 @@
 List = can.Model.extend({
 
-	//Neasted(assosiated models and serialisation)
+	//Neasted, sub tasks
 	attributes: {
 		tasks: 'Task.models'
 	},
 
-	//API
+	//API calls
 	findAll: 	'GET /lists',
 	findOne:  	'GET /lists/{id}',
 	create: 	'POST /lists',
 	update: 	'PUT /lists/{id}',
 	destroy: 	'DELETE /lists/{id}',
 
-	//PARSE
+	//Parsing function in case that we need them
 	parseModels: function(data, xhr){
 		return data;
 	},
@@ -20,6 +20,10 @@ List = can.Model.extend({
 		return data;
 	}
 },{
+	/*
+		customSave will go thru all sub tasks and save them 
+		as well as it self
+	*/
 	customSave: function(){
 		this.save().then(function(list){
 			if(list.tasks){
@@ -29,6 +33,12 @@ List = can.Model.extend({
 			}
 		});
 	},
+
+	/*
+		customDestroy will go thru all sub tasks and destroy them 
+		as well as it self, if there is event it will be stoped
+		from propagation
+	*/
 	customDestroy: function(context, el, value){
 		if(value)
 			value.stopPropagation();
@@ -40,11 +50,19 @@ List = can.Model.extend({
 		}
 		this.destroy();
 	},
-	//RETURNING CURENT NUMBER OF TASKS IN LIST
+	
+	/*
+		tasksNumber will return current number of sub tasks
+		with event delegation
+	*/
 	tasksNumber: function(){
 		return this.attr('tasks')? this.attr('tasks').attr('length') : 0;
 	},
-	//COUNTING TOTAL TIME IN ALL TASKS IN LIST
+
+	/*
+		timeSpent will return total time that is spent
+		on all sub tasks together
+	*/
 	timeSpent: function(){
 		var total = 0;
 		if(this.attr('tasks')){
@@ -58,7 +76,11 @@ List = can.Model.extend({
 
 });
 
-//API REQUESTS
+
+/*
+	Fixture for List model for parsing all API calls
+	to DB so it can be loaded later
+*/
 can.fixture({
 	'GET /lists': function (params){
 		var lists = Object.keys(db.lists).map(function (key) {return db.lists[key]});

@@ -1,18 +1,18 @@
 Board = can.Model.extend({
 	
-	//Neasted(assosiated models and serialisation)
+	//Neasted, sub lists
 	attributes: {
 		lists: 'List.models'
 	},
 
-	//API
+	//API calls
 	findAll: 	'GET /boards',
 	findOne:  	'GET /boards/{id}',
 	create: 	'POST /boards',
 	update: 	'PUT /boards/{id}',
 	destroy: 	'DELETE /boards/{id}',
 
-	//PARSE
+	//Parsing function in case that we need them
 	parseModels: function(data, xhr){
 		return data;
 	},
@@ -20,6 +20,10 @@ Board = can.Model.extend({
 		return data;
 	}
 },{
+	/*
+		customSave will go thru all sub lists and save them 
+		as well as it self
+	*/
 	customSave: function(){
 		this.save().then(function(board){
 			if(board.lists){
@@ -29,6 +33,12 @@ Board = can.Model.extend({
 			}
 		});
 	},
+
+	/*
+		customDestroy will go thru all sub lists and destroy them 
+		as well as it self, if there is event it will be stoped
+		from propagation
+	*/
 	customDestroy: function(context, el, value){
 		if(value)
 			value.stopPropagation();
@@ -40,11 +50,20 @@ Board = can.Model.extend({
 		}
 		this.destroy();
 	},
-	//RETURNING CURENT NUMBER OF LISTS IN BOARD
+
+	/*
+		listsNumber will return current number of sub lists
+		with event delegation
+	*/
 	listsNumber: function(){
 		return this.attr('lists')? this.attr('lists').attr('length') : 0;
 	},
-	//COUNTING TOTAL TASK IN ALL LISTS IN BOARD
+
+
+	/*
+		tasksNumber will return current number of sub tasks
+		in all sub lists together, with event delegation
+	*/
 	tasksNumber:function(){
 		var total = 0;
 		if(this.attr('lists')){
@@ -54,7 +73,11 @@ Board = can.Model.extend({
 		}
 		return total;
 	},
-	//COUNTING TOTAL TIME IN ALL TASKS IN ALL LISTS IN BOARD
+
+	/*
+		timeSpent will return total time that is spent
+		on all sub lists together
+	*/
 	timeSpent:function(){
 		var total = 0;
 		if(this.attr('lists')){
@@ -68,7 +91,10 @@ Board = can.Model.extend({
 });
 
 
-//API REQUESTS
+/*
+	Fixture for Board model for parsing all APIS calls
+	to DB so it can be loaded later
+*/
 can.fixture({
 	'GET /boards': function (params){
 		var boards = Object.keys(db.boards).map(function (key) {return db.boards[key]});

@@ -1,13 +1,13 @@
 Task = can.Model.extend({
 
-	//API
+	//API calls
 	findAll: 	'GET /tasks',
 	findOne:  	'GET /tasks/{id}',
 	create: 	'POST /tasks',
 	update: 	'PUT /tasks/{id}',
 	destroy: 	'DELETE /tasks/{id}',
 
-	//PARSE
+	//Parsing function in case that we need them
 	parseModels: function(data, xhr){
 		return data;
 	},
@@ -17,6 +17,10 @@ Task = can.Model.extend({
 
 },{
 
+	/*
+		customDestroy will destroy it self and if there is event it will be stoped
+		from propagation
+	*/
 	customDestroy: function(context, el, value){
 		value.stopPropagation();
 		this.destroy();
@@ -25,7 +29,10 @@ Task = can.Model.extend({
 });
 
 
-//API REQUESTS
+/*
+	Fixture for Task model for parsing all API calls 
+	to DB so it can be loaded later
+*/
 can.fixture({
 	'GET /tasks': function (params){
 		var tasks = Object.keys(db.tasks).map(function (key) {return db.tasks[key]});

@@ -71,6 +71,7 @@
 
 
 							{{ #each tasks }}
+								//On-click will past current context as well as current board that is on the page, because of back button
 								<div class="col-md-10 col-md-offset-1 text-center task-box" can-click="openTask this ../../../">
 									<span can-click="customDestroy" class="center" style="position:absolute; top:5px; right:5px; font-size:10px;">X</span>
 									<span class="center">{{ name }} - {{ total }}s</span>
@@ -100,10 +101,6 @@
 			{{ #parent }}
 				<span can-click="goBack" > BACK </span>
 			{{ /parent }}
-
-
-
-
 
 			{{ #task }}
 				<h1>{{name}}</h1>

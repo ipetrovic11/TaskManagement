@@ -1,4 +1,8 @@
-//DB DECLARATION
+/*
+	Database that will be used to store everything
+	from API calls so that all models can be 
+	persistent
+*/
 window.db 	= {};
 
 db.tasksSerial = 3;
@@ -23,9 +27,10 @@ db.boards 	= {
 };
 
 
-
-
-//LOGGING API
+/*
+	Monitoring fixture responses in order to check 
+	if it is responding as intended 
+*/
 var apilogging = true;
 function apiLog (result, params){
 
