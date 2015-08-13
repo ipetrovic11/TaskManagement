@@ -54,9 +54,76 @@
 		</boards>
 	</script>
 
-	<script type="text/javascript">
-		$('#content').html(can.view('boards-template', {}));
+
+	<script type="text/mustache" id="board-template">
+		<board>
+
+			<span can-click="goBack" > BACK </span>
+
+			{{ #board }}
+
+			<h1>{{name}}</h1>
+				{{ #each lists }}
+					<div class="col-md-3">
+						<div class="col-md-12 text-center list-box" style="padding:10px 0px;" list-id="{{ id }}">
+							<span can-click="customDestroy" class="center" style="position:absolute; top:5px; right:5px; font-size:10px;">X</span>
+							<span class="center">{{ name }}</span>
+
+
+							{{ #each tasks }}
+								<div class="col-md-10 col-md-offset-1 text-center task-box" can-click="openTask this ../../../">
+									<span can-click="customDestroy" class="center" style="position:absolute; top:5px; right:5px; font-size:10px;">X</span>
+									<span class="center">{{ name }} - {{ total }}s</span>
+								</div>
+							{{ /each }}
+
+
+							<div class="col-md-10 col-md-offset-1 text-center task-box">
+								<input class=" center" placeholder="New Task" can-enter="createTask">
+							</div>
+						</div>
+					</div>
+				{{ /each }}
+
+				<div class="col-md-3">
+					<div class="col-md-12 text-center list-box">
+						<input class=" center" placeholder="New List" can-enter="createList">
+					</div>
+				</div>			
+			{{ /board }}
+		</board>
 	</script>
+
+	<script type="text/mustache" id="task-template">
+		<task>
+
+			{{ #parent }}
+				<span can-click="goBack" > BACK </span>
+			{{ /parent }}
+
+
+
+
+
+			{{ #task }}
+				<h1>{{name}}</h1>
+				<h3> {{ total }} seconds</h3>
+		
+				{{#if started}}
+					<div class="stop-button" can-click="stopTimer">
+						STOP
+					</div>
+				{{else}}
+					<div class="start-button" can-click="startTimer">
+						START
+					</div>
+				{{/if}}
+
+
+			{{ /task }}
+		</task>
+	</script>
+
 
 </body>
 </html>

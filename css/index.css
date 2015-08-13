@@ -1,3 +1,6 @@
+/*
+Board css on boards page
+*/
 .board-box {
 	border-radius: 2px;
 	margin-top: 20px;
@@ -48,6 +51,146 @@
 	outline-style: auto;
 	outline-width: 0px;
 }
+
+
+
+
+
+/*
+List css on board page
+*/
+.list-box {
+	border-radius: 2px;
+	margin-top: 5px;
+	padding: 10px 0px;
+	background-color: #8DB9D2;
+}
+
+.list-box span {
+	background-color: #8DB9D2;
+	font-size: 30px;
+	color: white;
+	font-weight: 800;
+}
+
+.list-box p {
+	color: white;
+	font-weight: 300;
+}
+
+.list-box input{
+	background-color: #8DB9D2;
+	font-size: 30px;
+	color: white;
+	font-weight: 800;
+	border: 0px;
+    width: 100%;
+    text-align: center;
+    outline-color: transparent !important;
+}
+
+.list-box input:hover{
+    outline-color: transparent !important;
+    outline-offset: 0px;
+	outline-style: auto;
+	outline-width: 0px;
+}
+
+.list-box input:active{
+    outline-color: transparent !important;
+    outline-offset: 0px;
+	outline-style: auto;
+	outline-width: 0px;
+}
+
+.list-box input:focus{
+    outline-color: transparent !important;
+    outline-offset: 0px;
+	outline-style: auto;
+	outline-width: 0px;
+}
+
+
+
+
+
+
+/*
+List css on board page
+*/
+.task-box {
+	border-radius: 2px;
+	margin-top: 5px;
+	padding: 10px 0px;
+	background-color: #454D52;
+}
+
+.task-box span {
+	background-color: #454D52;
+	font-size: 15px;
+	color: white;
+	font-weight: 800;
+}
+
+.task-box p {
+	color: white;
+	font-weight: 300;
+}
+
+.task-box input{
+	background-color: #454D52;
+	font-size: 15px;
+	color: white;
+	font-weight: 800;
+	border: 0px;
+    width: 100%;
+    text-align: center;
+    outline-color: transparent !important;
+}
+
+.task-box input:hover{
+    outline-color: transparent !important;
+    outline-offset: 0px;
+	outline-style: auto;
+	outline-width: 0px;
+}
+
+.task-box input:active{
+    outline-color: transparent !important;
+    outline-offset: 0px;
+	outline-style: auto;
+	outline-width: 0px;
+}
+
+.task-box input:focus{
+    outline-color: transparent !important;
+    outline-offset: 0px;
+	outline-style: auto;
+	outline-width: 0px;
+}
+
+
+
+.start-button {
+	padding: 5px 20px;
+	height: 50px;
+	width: 135;
+	color: white;
+	font-size: 30px;
+	font-weight: 800;
+	background-color: #47be00;
+}
+
+.stop-button {
+	padding: 5px 20px;
+	height: 50px;
+	width: 125px;
+	color: white;
+	font-size: 30px;
+	font-weight: 800;
+	background-color: #ec0000;
+}
+
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:    white;

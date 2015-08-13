@@ -3,9 +3,9 @@ window.db 	= {};
 
 db.tasksSerial = 3;
 db.tasks 	= {
-	1: {id: 1, parentId: 2,name: 'Creating objects', started: false, total: 0},
-	2: {id: 2, parentId: 1,name: 'Creating view', started: false, total: 0},
-	3: {id: 3, parentId: 1,name: 'Creating routes', started: false, total: 0}
+	1: {id: 1, parentId: 2,name: 'Creating objects', started: false, total: 64},
+	2: {id: 2, parentId: 1,name: 'Creating view', started: false, total: 3},
+	3: {id: 3, parentId: 1,name: 'Creating routes', started: false, total: 17}
 };
 
 db.listsSerial = 3;
