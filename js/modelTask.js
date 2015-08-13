@@ -15,7 +15,14 @@ Task = can.Model.extend({
 		return data;
 	}
 
-},{});
+},{
+
+	customDestroy: function(context, el, value){
+		value.stopPropagation();
+		this.destroy();
+	},
+
+});
 
 
 //API REQUESTS

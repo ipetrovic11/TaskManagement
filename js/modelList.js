@@ -29,14 +29,31 @@ List = can.Model.extend({
 			}
 		});
 	},
-	//WITH REAL API(AJAX) WILL HAVE TO CHECK IF THIS WILL WORK BECAUSE OF ASYNC
-	customDestroy: function(){
-		if(this.tasks){
-			this.tasks.each(function(task){
+	customDestroy: function(context, el, value){
+		if(value)
+			value.stopPropagation();
+		
+		if(this.attr('tasks')){
+			this.attr('tasks').each(function(task){
 				task.destroy();
 			});
 		}
 		this.destroy();
+	},
+	//RETURNING CURENT NUMBER OF TASKS IN LIST
+	tasksNumber: function(){
+		return this.attr('tasks')? this.attr('tasks').attr('length') : 0;
+	},
+	//COUNTING TOTAL TIME IN ALL TASKS IN LIST
+	timeSpent: function(){
+		var total = 0;
+		if(this.attr('tasks')){
+			for(var i = 0; i<this.attr('tasks').attr('length'); i++){
+				total += this.attr('tasks')[i].attr('total');
+			}
+		}
+
+		return total;
 	}
 
 });

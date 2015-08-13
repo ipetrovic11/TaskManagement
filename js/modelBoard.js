@@ -29,8 +29,10 @@ Board = can.Model.extend({
 			}
 		});
 	},
-	//WITH REAL API(AJAX) WILL HAVE TO CHECK IF THIS WILL WORK BECAUSE OF ASYNC
-	customDestroy: function(){
+	customDestroy: function(context, el, value){
+		if(value)
+			value.stopPropagation();
+		
 		if(this.lists){
 			this.lists.each(function(list){
 				list.customDestroy();
@@ -38,17 +40,26 @@ Board = can.Model.extend({
 		}
 		this.destroy();
 	},
-
+	//RETURNING CURENT NUMBER OF LISTS IN BOARD
 	listsNumber: function(){
-		return this.lists? this.lists.length : 0;
+		return this.attr('lists')? this.attr('lists').attr('length') : 0;
 	},
+	//COUNTING TOTAL TASK IN ALL LISTS IN BOARD
 	tasksNumber:function(){
 		var total = 0;
-		if(this.lists){
-			for(var i = 0; i<this.lists.length; i++){
-				if(this.lists[i].tasks){
-					total += this.lists[i].tasks.length;
-				}
+		if(this.attr('lists')){
+			for(var i = 0; i<this.attr('lists').attr('length'); i++){
+				total += this.attr('lists')[i].tasksNumber();
+			}
+		}
+		return total;
+	},
+	//COUNTING TOTAL TIME IN ALL TASKS IN ALL LISTS IN BOARD
+	timeSpent:function(){
+		var total = 0;
+		if(this.attr('lists')){
+			for(var i = 0; i<this.attr('lists').attr('length'); i++){
+				total += this.attr('lists')[i].timeSpent();
 			}
 		}
 		return total;
