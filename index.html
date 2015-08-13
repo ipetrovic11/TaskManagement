@@ -37,11 +37,12 @@
 		<boards>
 			{{ #each boards }}
 				<div class="col-md-4">
-					<div class="col-md-10 col-md-offset-1 text-center board-box" style="padding:70px 0px;">
-						<span can-click="destroy" class="center" style="position:absolute; top:5px; right:5px; font-size:20px;">X</span>
+					<div class="col-md-10 col-md-offset-1 text-center board-box" style="padding:55px 0px;" board-id="{{ id }}" can-click="openBoard">
+						<span can-click="customDestroy" class="center" style="position:absolute; top:5px; right:5px; font-size:20px;">X</span>
 						<span class="center">{{ name }}</span>
 						<p class="center">Lists: {{ listsNumber }}</p>
 						<p class="center">Tasks: {{ tasksNumber }}</p>
+						<p class="center">Total Time: {{ timeSpent }}</p>
 					</div>
 				</div>
 			{{ /each }}
