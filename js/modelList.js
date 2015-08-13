@@ -32,7 +32,7 @@ List = can.Model.extend({
 	customDestroy: function(context, el, value){
 		if(value)
 			value.stopPropagation();
-		
+
 		if(this.attr('tasks')){
 			this.attr('tasks').each(function(task){
 				task.destroy();
@@ -59,72 +59,58 @@ List = can.Model.extend({
 });
 
 //API REQUESTS
-can.fixture('GET /lists', function (params){
-
-	var lists = Object.keys(db.lists).map(function (key) {return db.lists[key]});
-
-	return apiLog(lists, params);
-});
-
-can.fixture('GET /lists/{id}', function (params){
-
-	var list = db.lists[params.data.id];
-
-	return apiLog(list, params);
-});
-
-can.fixture('POST /lists', function (params){
-
-	db.listsSerial++;
-	db.lists[db.listsSerial] = {id: db.listsSerial, name: params.data.name, parentId: params.data.parentId};
+can.fixture({
+	'GET /lists': function (params){
+		var lists = Object.keys(db.lists).map(function (key) {return db.lists[key]});
+		return apiLog(lists, params);
+	},
 
 
-	if(!db.boards[params.data.parentId].lists){
-		db.boards[params.data.parentId].lists = [];
-	}
+	'GET /lists/{id}': function (params){
+		var list = db.lists[params.data.id];
+		return apiLog(list, params);
+	},
 
-	db.boards[params.data.parentId].lists.push(db.lists[db.listsSerial]);
 
-	var result = {id: db.listsSerial};
-
-	return apiLog(result, params);
-});
-
-can.fixture('PUT /lists/{id}', function (params){
-
-	var list = db.lists[params.data.id];
-
-	list.name = params.data.name;
-	list.tasks = params.data.tasks;
-
-	//Deserialisation for DB
-	for(var i in list.tasks){
-		list.tasks[i] = db.tasks[list.tasks[i].id];
-	}
-
-	var result = {};
-
-	return apiLog(result, params);
-});
-
-can.fixture('DELETE /lists/{id}', function (params){
-
-	var list = db.lists[params.data.id];
-
-	for(var i in list.tasks){
-		delete db.tasks[list.tasks[i].id];
-	}
-
-	//Removeing reference form parent
-	for(var i in db.boards[list.parentId].lists){
-		if(db.boards[list.parentId].lists[i].id == list.id){
-			db.boards[list.parentId].lists.splice(i, 1);
+	'POST /lists': function (params){
+		db.listsSerial++;
+		db.lists[db.listsSerial] = {id: db.listsSerial, name: params.data.name, parentId: params.data.parentId};
+		if(!db.boards[params.data.parentId].lists){
+			db.boards[params.data.parentId].lists = [];
 		}
+		db.boards[params.data.parentId].lists.push(db.lists[db.listsSerial]);
+		var result = {id: db.listsSerial};
+		return apiLog(result, params);
+	},
+
+
+	'PUT /lists/{id}': function (params){
+		var list = db.lists[params.data.id];
+		list.name = params.data.name;
+		list.tasks = params.data.tasks;
+		//Deserialisation for DB
+		for(var i in list.tasks){
+			list.tasks[i] = db.tasks[list.tasks[i].id];
+		}
+		var result = {};
+		return apiLog(result, params);
+	},
+
+
+	'DELETE /lists/{id}': function (params){
+		var list = db.lists[params.data.id];
+		//Deleting all sub tasks
+		for(var i in list.tasks){
+			delete db.tasks[list.tasks[i].id];
+		}
+		//Removeing reference form parent
+		for(var i in db.boards[list.parentId].lists){
+			if(db.boards[list.parentId].lists[i].id == list.id){
+				db.boards[list.parentId].lists.splice(i, 1);
+			}
+		}
+		delete db.lists[params.data.id];
+		var result = {};
+		return apiLog(result, params);
 	}
-
-	delete db.lists[params.data.id];
-
-	var result = {};
-
-	return apiLog(result, params);
 });
